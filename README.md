@@ -188,9 +188,9 @@ Request có token JWT bị giả mạo / sai chữ ký
 
 **Nhận xét phản biện:**
 
-✅ **Đồng ý:** Redis cho tiến độ học tập — write throughput cao, latency thấp, phù hợp cho dữ liệu cập nhật liên tục. PostgreSQL cho dữ liệu nghiệp vụ cần ACID (thanh toán, enrollment).
+ **Đồng ý:** Redis cho tiến độ học tập — write throughput cao, latency thấp, phù hợp cho dữ liệu cập nhật liên tục. PostgreSQL cho dữ liệu nghiệp vụ cần ACID (thanh toán, enrollment).
 
-⚠️ **Phản đối một phần:** AI ban đầu đề xuất dùng **WebSocket** để đồng bộ tiến độ giữa các thiết bị. Tôi phản đối vì:
+**Phản đối một phần:** AI ban đầu đề xuất dùng **WebSocket** để đồng bộ tiến độ giữa các thiết bị. Tôi phản đối vì:
 - WebSocket tốn tài nguyên server khi duy trì persistent connection cho mọi user.
 - Với yêu cầu "học tiếp trên thiết bị khác", ta chỉ cần **pull-based** (đọc tiến độ mới nhất từ Redis khi mở app) thay vì push realtime.
 - WebSocket phù hợp cho chat, live notification — không cần thiết cho progress tracking vốn là hành vi đơn hướng (user → server).

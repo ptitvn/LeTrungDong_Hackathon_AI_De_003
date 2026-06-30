@@ -6,7 +6,7 @@ erDiagram
         String fullName
         String phone
         String avatarUrl
-        Enum role "STUDENT, INSTRUCTOR, MODERATOR"
+        Enum role "STUDENT_INSTRUCTOR_MODERATOR"
         Boolean isActive
         DateTime createdAt
         DateTime updatedAt
@@ -15,7 +15,7 @@ erDiagram
     SUBSCRIPTION {
         Long id PK
         Long userId FK
-        Enum plan "FREE, PRO"
+        Enum plan "FREE_PRO"
         DateTime startDate
         DateTime endDate
         Boolean isActive
@@ -28,8 +28,8 @@ erDiagram
         String description
         String thumbnailUrl
         Double price
-        Enum level "BASIC, ADVANCED"
-        Enum status "DRAFT, PUBLISHED, ARCHIVED"
+        Enum level "BASIC_ADVANCED"
+        Enum status "DRAFT_PUBLISHED_ARCHIVED"
         DateTime createdAt
         DateTime updatedAt
     }
@@ -47,7 +47,7 @@ erDiagram
         String title
         String videoUrl
         Int durationSeconds
-        Enum type "VIDEO, EXERCISE"
+        Enum type "VIDEO_EXERCISE"
         Int orderIndex
     }
 
@@ -57,7 +57,7 @@ erDiagram
         Long courseId FK
         Double paidAmount
         DateTime enrolledAt
-        Enum status "ACTIVE, COMPLETED, CANCELLED"
+        Enum status "ACTIVE_COMPLETED_CANCELLED"
     }
 
     LEARNING_PROGRESS {
@@ -74,10 +74,10 @@ erDiagram
         Long id PK
         Long enrollmentId FK
         Double amount
-        Double platformFee "30 percent"
-        Double instructorRevenue "70 percent"
-        Enum method "STRIPE, BANK_TRANSFER, INSTALLMENT"
-        Enum status "PENDING, COMPLETED, FAILED, REFUNDED"
+        Double platformFee "30_percent"
+        Double instructorRevenue "70_percent"
+        Enum method "STRIPE_BANK_TRANSFER_INSTALLMENT"
+        Enum status "PENDING_COMPLETED_FAILED_REFUNDED"
         String transactionId
         DateTime createdAt
     }
@@ -85,7 +85,7 @@ erDiagram
     COUPON {
         Long id PK
         String code UK
-        Enum discountType "PERCENTAGE, FIXED_AMOUNT"
+        Enum discountType "PERCENTAGE_FIXED_AMOUNT"
         Double discountValue
         DateTime validFrom
         DateTime validTo
@@ -114,7 +114,7 @@ erDiagram
         Double subtotal
         Double discountAmount
         Double totalAmount
-        Enum status "PENDING, PAID, CANCELLED"
+        Enum status "PENDING_PAID_CANCELLED"
         DateTime createdAt
     }
 
@@ -129,7 +129,7 @@ erDiagram
         Long id PK
         Long studentId FK
         Long courseId FK
-        Int rating "1-5"
+        Int rating "1_to_5"
         String comment
         DateTime createdAt
     }
