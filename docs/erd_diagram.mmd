@@ -1,0 +1,154 @@
+erDiagram
+    USER {
+        Long id PK
+        String email UK
+        String password
+        String fullName
+        String phone
+        String avatarUrl
+        Enum role "STUDENT, INSTRUCTOR, MODERATOR"
+        Boolean isActive
+        DateTime createdAt
+        DateTime updatedAt
+    }
+
+    SUBSCRIPTION {
+        Long id PK
+        Long userId FK
+        Enum plan "FREE, PRO"
+        DateTime startDate
+        DateTime endDate
+        Boolean isActive
+    }
+
+    COURSE {
+        Long id PK
+        Long instructorId FK
+        String title
+        String description
+        String thumbnailUrl
+        Double price
+        Enum level "BASIC, ADVANCED"
+        Enum status "DRAFT, PUBLISHED, ARCHIVED"
+        DateTime createdAt
+        DateTime updatedAt
+    }
+
+    COURSE_SECTION {
+        Long id PK
+        Long courseId FK
+        String title
+        Int orderIndex
+    }
+
+    LESSON {
+        Long id PK
+        Long sectionId FK
+        String title
+        String videoUrl
+        Int durationSeconds
+        Enum type "VIDEO, EXERCISE"
+        Int orderIndex
+    }
+
+    ENROLLMENT {
+        Long id PK
+        Long studentId FK
+        Long courseId FK
+        Double paidAmount
+        DateTime enrolledAt
+        Enum status "ACTIVE, COMPLETED, CANCELLED"
+    }
+
+    LEARNING_PROGRESS {
+        Long id PK
+        Long enrollmentId FK
+        Long lessonId FK
+        Boolean isCompleted
+        Int lastPositionSeconds
+        DateTime lastAccessedAt
+        DateTime completedAt
+    }
+
+    PAYMENT {
+        Long id PK
+        Long enrollmentId FK
+        Double amount
+        Double platformFee "30 percent"
+        Double instructorRevenue "70 percent"
+        Enum method "STRIPE, BANK_TRANSFER, INSTALLMENT"
+        Enum status "PENDING, COMPLETED, FAILED, REFUNDED"
+        String transactionId
+        DateTime createdAt
+    }
+
+    COUPON {
+        Long id PK
+        String code UK
+        Enum discountType "PERCENTAGE, FIXED_AMOUNT"
+        Double discountValue
+        DateTime validFrom
+        DateTime validTo
+        Int maxUsage
+        Int currentUsage
+        Boolean isActive
+    }
+
+    CART {
+        Long id PK
+        Long studentId FK
+        DateTime createdAt
+    }
+
+    CART_ITEM {
+        Long id PK
+        Long cartId FK
+        Long courseId FK
+        DateTime addedAt
+    }
+
+    ORDER {
+        Long id PK
+        Long studentId FK
+        Long couponId FK "nullable"
+        Double subtotal
+        Double discountAmount
+        Double totalAmount
+        Enum status "PENDING, PAID, CANCELLED"
+        DateTime createdAt
+    }
+
+    ORDER_ITEM {
+        Long id PK
+        Long orderId FK
+        Long courseId FK
+        Double price
+    }
+
+    REVIEW {
+        Long id PK
+        Long studentId FK
+        Long courseId FK
+        Int rating "1-5"
+        String comment
+        DateTime createdAt
+    }
+
+    USER ||--o{ COURSE : "instructs"
+    USER ||--o| SUBSCRIPTION : "subscribes"
+    USER ||--o{ ENROLLMENT : "enrolls"
+    USER ||--o| CART : "has"
+    USER ||--o{ ORDER : "places"
+    USER ||--o{ REVIEW : "writes"
+    COURSE ||--o{ COURSE_SECTION : "contains"
+    COURSE_SECTION ||--o{ LESSON : "contains"
+    COURSE ||--o{ ENROLLMENT : "has"
+    COURSE ||--o{ CART_ITEM : "in"
+    COURSE ||--o{ ORDER_ITEM : "in"
+    COURSE ||--o{ REVIEW : "receives"
+    ENROLLMENT ||--o{ LEARNING_PROGRESS : "tracks"
+    ENROLLMENT ||--o| PAYMENT : "paid_by"
+    LESSON ||--o{ LEARNING_PROGRESS : "tracked_in"
+    CART ||--o{ CART_ITEM : "contains"
+    ORDER ||--o{ ORDER_ITEM : "contains"
+    ORDER }o--o| COUPON : "applies"
